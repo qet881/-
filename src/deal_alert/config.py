@@ -38,6 +38,7 @@ class Config:
     enable_x_provider: bool = False
     enable_threads_provider: bool = False
     json_feed_urls: list[str] = field(default_factory=list)
+    rss_feed_urls: list[str] = field(default_factory=list)
 
     @classmethod
     def from_env(cls) -> "Config":
@@ -51,6 +52,7 @@ class Config:
             enable_x_provider=_env_bool("ENABLE_X_PROVIDER", False),
             enable_threads_provider=_env_bool("ENABLE_THREADS_PROVIDER", False),
             json_feed_urls=_env_csv("DEAL_ALERT_JSON_FEED_URLS"),
+            rss_feed_urls=_env_csv("DEAL_ALERT_RSS_FEED_URLS"),
         )
 
     @property

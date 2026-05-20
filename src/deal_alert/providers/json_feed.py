@@ -29,18 +29,45 @@ class JsonFeedProvider:
         with urllib.request.urlopen(request, timeout=20) as response:
             payload = json.loads(response.read().decode("utf-8"))
 
-        raw_items = payload.get("items", payload) if isinstance(payload, dict) else payload
+        raw_items = _raw_items(payload)
         if not isinstance(raw_items, list):
-            raise ValueError(f"JSON feed must be a list or an object with items: {url}")
+            raise ValueError(f"JSON feed must be a list or an object with items/posts: {url}")
 
         for raw in raw_items:
             if not isinstance(raw, dict):
                 continue
+            text = str(raw.get("text") or "")
+            if not text:
+                text = _text_from_post(raw)
             yield ProviderItem(
                 id=str(raw.get("id") or raw.get("url") or ""),
                 source=str(raw.get("source") or self.name),
-                url=str(raw.get("url") or ""),
+                url=str(raw.get("url") or raw.get("deal_link") or raw.get("buyurl") or ""),
                 author=str(raw.get("author") or ""),
-                text=str(raw.get("text") or ""),
+                text=text,
                 created_at=str(raw.get("created_at") or ""),
             )
+
+
+def _raw_items(payload: object) -> object:
+    if not isinstance(payload, dict):
+        return payload
+    if "items" in payload:
+        return payload["items"]
+    if "posts" in payload:
+        return payload["posts"]
+    if "list" in payload:
+        return payload["list"]
+    return payload
+
+
+def _text_from_post(raw: dict[str, object]) -> str:
+    parts = [
+        raw.get("title"),
+        raw.get("product_name"),
+        raw.get("price"),
+        raw.get("price_sale"),
+        raw.get("currency"),
+        raw.get("mall"),
+    ]
+    return " ".join(str(part) for part in parts if part not in (None, ""))

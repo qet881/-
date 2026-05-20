@@ -30,6 +30,7 @@ jobs:
           MIN_SCORE: ${{ vars.MIN_SCORE || '8' }}
           VIRAL_THRESHOLD: ${{ vars.VIRAL_THRESHOLD || '7' }}
           DEAL_ALERT_JSON_FEED_URLS: ${{ vars.DEAL_ALERT_JSON_FEED_URLS }}
+          DEAL_ALERT_RSS_FEED_URLS: ${{ vars.DEAL_ALERT_RSS_FEED_URLS }}
         run: python -m deal_alert.main
 
       - name: Commit state

@@ -4,6 +4,7 @@ from deal_alert.config import Config
 
 from .base import DisabledProvider, Provider, ProviderItem
 from .json_feed import JsonFeedProvider
+from .rss_feed import RssFeedProvider
 from .threads import ThreadsProvider
 from .x import XProvider
 
@@ -15,6 +16,8 @@ def build_providers(config: Config) -> list[Provider]:
     ]
     if config.json_feed_urls:
         providers.append(JsonFeedProvider(config.json_feed_urls))
+    if config.rss_feed_urls:
+        providers.append(RssFeedProvider(config.rss_feed_urls))
     return providers
 
 
@@ -23,6 +26,7 @@ __all__ = [
     "JsonFeedProvider",
     "Provider",
     "ProviderItem",
+    "RssFeedProvider",
     "ThreadsProvider",
     "XProvider",
     "build_providers",

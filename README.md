@@ -8,6 +8,7 @@ AI 구독/소프트웨어와 Apple 제품 특가 후보를 보수적으로 점�
 - X와 Threads는 v1의 중심 provider로 구조만 마련되어 있지만, 무료/공식/약관 준수 public search/read 접근이 없으므로 기본 비활성화되어 있습니다.
 - 로그인 쿠키 스크래핑, CAPTCHA 우회, 우회 프록시, 무단 대량 크롤링은 구현하지 않습니다.
 - 사용자가 약관상 읽을 수 있는 공식 HTTPS JSON 피드가 있으면 `DEAL_ALERT_JSON_FEED_URLS`에 쉼표로 추가할 수 있습니다. 각 item은 `id`, `source`, `url`, `author`, `text`, `created_at` 필드를 사용합니다.
+- 공식 RSS 피드는 `DEAL_ALERT_RSS_FEED_URLS`에 쉼표로 추가할 수 있습니다.
 
 ## GitHub Actions 5분 주기
 
@@ -33,6 +34,7 @@ GitHub 저장소 Secrets에 다음 값을 등록합니다.
 - `MIN_SCORE`: 기본값 `8`
 - `VIRAL_THRESHOLD`: 기본값 `7`
 - `DEAL_ALERT_JSON_FEED_URLS`: 허용된 HTTPS JSON feed URL 목록
+- `DEAL_ALERT_RSS_FEED_URLS`: 허용된 HTTPS RSS feed URL 목록
 
 로컬에서는 `.env.example`을 참고해 환경변수를 설정한 뒤 실행합니다.
 
